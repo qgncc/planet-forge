@@ -1,11 +1,24 @@
-import { Color } from "pixi.js";
 import { Seed } from "types";
+import { LandscapeLayer, layer } from "./Landscape";
+import { DEFAULT_LANDSCAPE } from "./planet-types";
+
+export type PlanetColorConfig = {
+  land: string;
+  water: string;
+};
+export type PlanetOptions = {
+  heightMapSeed?: Seed;
+  landscape?: Array<[string, number]> | LandscapeLayer[];
+};
 
 export class Planet {
-  landColor: Color;
-  waterColor: Color;
-  constructor(public seed?: Seed) {
-    this.landColor = new Color("#3ad42c");
-    this.waterColor = new Color("#2c6dd4");
+  heightMapSeed?: Seed;
+  landscape: LandscapeLayer[];
+  constructor(options: PlanetOptions) {
+    this.heightMapSeed = options.heightMapSeed ?? Math.random();
+    this.landscape =
+      options.landscape?.map((landscape) =>
+        Array.isArray(landscape) ? layer(...landscape) : landscape,
+      ) ?? DEFAULT_LANDSCAPE;
   }
 }

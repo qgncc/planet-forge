@@ -1,2 +1,2 @@
-export * from "./PlanetSprite";
+export * from "./planet"
 
