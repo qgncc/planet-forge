@@ -1,11 +1,16 @@
-import { Graphics, Ticker, TilingSprite, TilingSpriteOptions } from "pixi.js";
-import { Seed } from "types";
+import {
+  DestroyOptions,
+  Graphics,
+  Ticker,
+  TilingSprite,
+  TilingSpriteOptions,
+} from "pixi.js";
 import { generatePlanetTexture } from "./generatePlanetTexture";
 import { shade } from "./shade";
-import { PlanetFactory } from "lib/planet/PlanetFactory";
+import { Planet } from "lib/planet";
 
 export type PlanetSpriteArgs = TilingSpriteOptions & {
-  seed?: Seed;
+  planet: Planet;
   rotationSpeed?: number;
 };
 
@@ -13,8 +18,7 @@ export class PlanetSprite extends TilingSprite {
   private rotationSpeed: number;
   private readonly planetWidth: number;
 
-  constructor(options?: PlanetSpriteArgs) {
-    const planet = PlanetFactory.createRandomPlanet();
+  constructor(options: PlanetSpriteArgs) {
     const size = 512;
 
     // Create a circular mask
@@ -23,7 +27,7 @@ export class PlanetSprite extends TilingSprite {
       .fill("#fff");
 
     // Create texture with doubled width for seamless rotation
-    const texture = generatePlanetTexture(size, planet);
+    const texture = generatePlanetTexture(size, options.planet);
 
     super({
       texture,
@@ -40,17 +44,21 @@ export class PlanetSprite extends TilingSprite {
     // Set initial tiling position to center of the texture
     this.tilePosition.x = -this.planetWidth;
   }
-
+  public destroy(options?: DestroyOptions): void {
+    Ticker.shared.remove(this.rotate);
+    super.destroy(options);
+  }
+  private rotate = () => {
+    // Update tiling position and wrap around when needed
+    this.tilePosition.x += this.rotationSpeed;
+    // Wrap the texture position
+    if (this.tilePosition.x <= -this.planetWidth * 2) {
+      this.tilePosition.x = 0;
+    } else if (this.tilePosition.x >= 0) {
+      this.tilePosition.x = -this.planetWidth * 2;
+    }
+  };
   public startRotation(): void {
-    Ticker.shared.add(() => {
-      // Update tiling position and wrap around when needed
-      this.tilePosition.x += this.rotationSpeed;
-      // Wrap the texture position
-      if (this.tilePosition.x <= -this.planetWidth * 2) {
-        this.tilePosition.x = 0;
-      } else if (this.tilePosition.x >= 0) {
-        this.tilePosition.x = -this.planetWidth * 2;
-      }
-    });
+    Ticker.shared.add(this.rotate);
   }
 }

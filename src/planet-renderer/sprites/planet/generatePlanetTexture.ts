@@ -12,7 +12,7 @@ export function generatePlanetTexture(size: number, planet: Planet) {
   const imageData = ctx!.createImageData(canvas.width, canvas.height);
   const data = imageData.data;
 
-  const octaves = 4;
+  const octaves = planet.heightMapSeed % 4;
   const persistence = 0.5;
   const scale = 3;
 

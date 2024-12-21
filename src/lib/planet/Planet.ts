@@ -7,12 +7,13 @@ export type PlanetColorConfig = {
   water: string;
 };
 export type PlanetOptions = {
+  size?: string | number;
   heightMapSeed?: Seed;
   landscape?: Array<[string, number]> | LandscapeLayer[];
 };
 
 export class Planet {
-  heightMapSeed?: Seed;
+  heightMapSeed: Seed;
   landscape: LandscapeLayer[];
   constructor(options: PlanetOptions) {
     this.heightMapSeed = options.heightMapSeed ?? Math.random();
