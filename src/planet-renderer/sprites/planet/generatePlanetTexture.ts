@@ -18,8 +18,8 @@ export function generatePlanetTexture(size: number, planet: Planet) {
 
   function getNoiseValue(x: number, y: number): number {
     let noise = 0;
-    let amplitude = 1;
-    let frequency = 0.3;
+    let amplitude = 2;
+    let frequency = (planet.heightMapSeed % 4) / 4;
     let maxValue = 0;
 
     for (let i = 0; i < octaves; i++) {
