@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "preact/hooks";
 import { FC } from "preact/compat";
-import { PlanetFactory } from "lib/planet/PlanetFactory";
+import { PlanetFactory } from "shared/lib";
 import { usePlanetApp } from "./planet-app-context";
 export type PlanetRendererProps = {
   width: number | string;
