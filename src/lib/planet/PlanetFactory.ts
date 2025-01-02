@@ -1,5 +1,5 @@
 import { Seed } from "types";
-import { Planet } from "./Planet";
+import { Planet, PlanetSize } from "./Planet";
 import { PLANET_TYPES_ARRAY } from "./planet-types";
 
 export class PlanetFactory {
@@ -11,6 +11,7 @@ export class PlanetFactory {
     const planet = new Planet({
       heightMapSeed: seed,
       landscape: type.landscape,
+      size: ((seed % 5) + 1) as PlanetSize,
     });
 
     return planet;

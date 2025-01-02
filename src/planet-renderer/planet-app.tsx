@@ -30,7 +30,7 @@ export class PlanetApp {
     }
 
     // Create and add new planet
-    this.currentPlanet = new PlanetSprite({ planet });
+    this.currentPlanet = new PlanetSprite({ planet, canvas: this.app.screen });
     const center = calcCenter(this.currentPlanet, this.app.screen);
     this.currentPlanet.position = center;
     this.app.stage.addChild(this.currentPlanet);

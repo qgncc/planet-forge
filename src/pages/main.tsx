@@ -5,7 +5,7 @@ export const Main = () => {
   const { app } = usePlanetApp();
   return (
     <>
-      <PlanetRenderer width={1000} height={1000} />
+      <PlanetRenderer width="80%" height="80%" />
       <button onClick={() => app.renderRandomPlanet()}>
         Сгенерировать планету
       </button>

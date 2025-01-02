@@ -24,9 +24,10 @@ export const PlanetRenderer: FC<PlanetRendererProps> = ({ width, height }) => {
       id="pixi_app"
       ref={containerRef}
       style={{
+        maxWidth: 500,
         width,
-        height,
         position: "relative",
+        aspectRatio: "1 / 1", // This ensures a 1:1 aspect ratio (square)
       }}
     />
   );

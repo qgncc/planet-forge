@@ -8,26 +8,34 @@ import {
 import { generatePlanetTexture } from "./generatePlanetTexture";
 import { shade } from "./shade";
 import { Planet } from "lib/planet";
-
+type Canvas = {
+  width: number;
+  height: number;
+};
 export type PlanetSpriteArgs = TilingSpriteOptions & {
   planet: Planet;
   rotationSpeed?: number;
+  canvas: Canvas;
 };
 
 export class PlanetSprite extends TilingSprite {
   private rotationSpeed: number;
   private readonly planetWidth: number;
-
-  constructor(options: PlanetSpriteArgs) {
-    const size = 512;
-
+  private canvas: Canvas;
+  constructor({
+    planet,
+    canvas,
+    rotationSpeed,
+    ...restOptions
+  }: PlanetSpriteArgs) {
+    const size = canvas.width * (planet.size * 0.15 + 0.15);
     // Create a circular mask
     const mask = new Graphics()
       .circle(size / 2, size / 2, size / 2)
       .fill("#fff");
 
     // Create texture with doubled width for seamless rotation
-    const texture = generatePlanetTexture(size, options.planet);
+    const texture = generatePlanetTexture(size, planet);
 
     super({
       texture,
@@ -35,14 +43,15 @@ export class PlanetSprite extends TilingSprite {
       height: size,
       mask,
       children: [mask, shade(size / 2)],
-      ...options,
+      ...restOptions,
     });
 
     this.planetWidth = size;
-    this.rotationSpeed = options?.rotationSpeed ?? -1;
+    this.rotationSpeed = rotationSpeed ?? -1;
 
     // Set initial tiling position to center of the texture
     this.tilePosition.x = -this.planetWidth;
+    this.canvas = canvas;
   }
   public destroy(options?: DestroyOptions): void {
     Ticker.shared.remove(this.rotate);
