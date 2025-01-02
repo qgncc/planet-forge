@@ -1,8 +1,6 @@
 import { Application } from "pixi.js";
 import { PlanetSprite } from "./sprites/planet/PlanetSprite";
-import { calcCenter } from "lib/calcCenter";
-import { Planet } from "lib/planet";
-import { PlanetFactory } from "lib/planet/PlanetFactory";
+import { calcCenter, Planet, PlanetFactory } from "shared/lib";
 
 export class PlanetApp {
   private app: Application;
