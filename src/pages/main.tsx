@@ -7,8 +7,8 @@ export const Main = () => {
   return (
     <Page>
       <PlanetRenderer width="80%" height="80%" />
-      <Button onClick={() => app.renderRandomPlanet()}>
-        Сгенерировать планету
+      <Button size="xl" onClick={() => app.renderRandomPlanet()}>
+        FORGE
       </Button>
     </Page>
   );
