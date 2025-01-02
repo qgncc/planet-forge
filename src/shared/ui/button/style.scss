@@ -10,4 +10,29 @@
     flex-shrink: 0;
     font-size: 22px;
     color: #fff;
+    // Fixed widths
+    &--xs {
+        width: 100px;
+    }
+
+    &--sm {
+        width: 150px;
+    }
+
+    &--md {
+        width: 200px;
+    }
+
+    &--lg {
+        width: 250px;
+    }
+
+    &--xl {
+        width: 300px;
+    }
+
+    // Full width
+    &--full {
+        width: 100%;
+    }
 }
