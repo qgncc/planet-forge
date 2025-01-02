@@ -13,7 +13,8 @@
     "colord": "^2.9.3",
     "pixi.js": "^8.6.6",
     "preact": "^10.25.2",
-    "simplex-noise": "^4.0.3"
+    "simplex-noise": "^4.0.3",
+    "vite-plugin-svgr": "^4.3.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.9.3",
