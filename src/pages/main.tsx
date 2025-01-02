@@ -6,7 +6,7 @@ export const Main = () => {
   const { app } = usePlanetApp();
   return (
     <Page>
-      <Logo />
+      <Logo width="500" />
       <PlanetRenderer width="80%" height="80%" />
       <Button size="xl" onClick={() => app.renderRandomPlanet()}>
         FORGE
