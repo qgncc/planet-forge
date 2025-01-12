@@ -1,6 +1,6 @@
 import { createNoise3D } from "simplex-noise";
 import { getHeightColor } from "./getHeightColor";
-import { Planet } from "lib/planet";
+import { Planet } from "shared/lib";
 import { Texture } from "pixi.js";
 
 export function generatePlanetTexture(size: number, planet: Planet) {

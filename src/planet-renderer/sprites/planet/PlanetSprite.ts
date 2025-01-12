@@ -7,7 +7,7 @@ import {
 } from "pixi.js";
 import { generatePlanetTexture } from "./generatePlanetTexture";
 import { shade } from "./shade";
-import { Planet } from "lib/planet";
+import { Planet } from "shared/lib";
 type Canvas = {
   width: number;
   height: number;
