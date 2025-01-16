@@ -1,3 +1,4 @@
+import 'pixi.js/math-extras';
 import { render } from "preact";
 import "shared/styles/index.scss";
 import { App } from "./app.tsx";
