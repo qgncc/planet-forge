@@ -1,17 +1,19 @@
-import { Seed } from "types";
-import { Planet, PlanetSize } from "./Planet";
+import { Seed } from "shared/types";
+import { Planet } from "./Planet";
 import { PLANET_TYPES_ARRAY } from "./planet-types";
-
+export type CreateRandomPlanetOptions = {
+  seed?: Seed;
+  size: number
+};
 export class PlanetFactory {
-  static createRandomPlanet(seed?: Seed): Planet {
-    seed = seed ?? Math.random() * 1000;
+  static createRandomPlanet(options: CreateRandomPlanetOptions): Planet {
+    const seed = options?.seed ?? Math.random() * 1000;
     const index = Math.floor(seed % PLANET_TYPES_ARRAY.length);
     const type = PLANET_TYPES_ARRAY[index];
-    console.log(type);
     const planet = new Planet({
       heightMapSeed: seed,
       landscape: type.landscape,
-      size: ((seed % 5) + 1) as PlanetSize,
+      size: options.size
     });
 
     return planet;

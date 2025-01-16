@@ -1,4 +1,4 @@
-import { Seed } from "types";
+import { Seed } from "shared/types";
 import { LandscapeLayer, layer } from "./Landscape";
 import { DEFAULT_LANDSCAPE } from "./planet-types";
 
@@ -6,10 +6,9 @@ export type PlanetColorConfig = {
   land: string;
   water: string;
 };
-// 30% | 45% | 60% | 75% | 90% of a container
-export type PlanetSize = 1 | 2 | 3 | 4 | 5;
+export type PlanetSize = number
 export type PlanetOptions = {
-  size?: PlanetSize;
+  size: PlanetSize;
   heightMapSeed?: Seed;
   landscape?: Array<[string, number]> | LandscapeLayer[];
 };
@@ -24,6 +23,6 @@ export class Planet {
       options.landscape?.map((landscape) =>
         Array.isArray(landscape) ? layer(...landscape) : landscape,
       ) ?? DEFAULT_LANDSCAPE;
-    this.size = options.size ?? 4;
+    this.size = options.size
   }
 }

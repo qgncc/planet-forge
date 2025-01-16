@@ -8,28 +8,22 @@ import {
 import { generatePlanetTexture } from "./generatePlanetTexture";
 import { shade } from "./shade";
 import { Planet } from "shared/lib";
-type Canvas = {
-  width: number;
-  height: number;
-};
+
 export type PlanetSpriteArgs = TilingSpriteOptions & {
   planet: Planet;
   rotationSpeed?: number;
-  canvas: Canvas;
 };
 
 export class PlanetSprite extends TilingSprite {
   private rotationSpeed: number;
   private readonly planetWidth: number;
-  private canvas: Canvas;
   constructor({
     planet,
-    canvas,
     rotationSpeed,
     ...restOptions
   }: PlanetSpriteArgs) {
-    const size = canvas.width * (planet.size * 0.15 + 0.15);
     // Create a circular mask
+    const size = planet.size
     const mask = new Graphics()
       .circle(size / 2, size / 2, size / 2)
       .fill("#fff");
@@ -51,7 +45,6 @@ export class PlanetSprite extends TilingSprite {
 
     // Set initial tiling position to center of the texture
     this.tilePosition.x = -this.planetWidth;
-    this.canvas = canvas;
   }
   public destroy(options?: DestroyOptions): void {
     Ticker.shared.remove(this.rotate);

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "preact/hooks";
 import { FC } from "preact/compat";
-import { PlanetFactory } from "shared/lib";
 import { usePlanetApp } from "./planet-app-context";
 export type PlanetRendererProps = {
   width: number | string;
@@ -11,9 +10,7 @@ export const PlanetRenderer: FC<PlanetRendererProps> = ({ width, height }) => {
   const { app } = usePlanetApp();
   useEffect(() => {
     if (!containerRef.current) return;
-    app
-      .init(containerRef.current)
-      .then(() => app.renderPlanet(PlanetFactory.createRandomPlanet()));
+    app.init(containerRef.current);
     return async () => {
       app.destroy();
     };
@@ -24,10 +21,9 @@ export const PlanetRenderer: FC<PlanetRendererProps> = ({ width, height }) => {
       id="pixi_app"
       ref={containerRef}
       style={{
-        maxWidth: 500,
         width,
+        height,
         position: "relative",
-        aspectRatio: "1 / 1", // This ensures a 1:1 aspect ratio (square)
       }}
     />
   );

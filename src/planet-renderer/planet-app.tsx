@@ -1,60 +1,28 @@
 import { Application } from "pixi.js";
 import { PlanetSprite } from "./sprites/planet/PlanetSprite";
-import { calcCenter, Planet, PlanetFactory } from "shared/lib";
+import { Space } from "./space";
+import { Viewport } from "./viewport";
+import { seed } from "./seed";
 
 export class PlanetApp {
   private app: Application;
-  private currentPlanet?: PlanetSprite;
   private appElement: HTMLElement | null = null;
-
+  private viewport: Viewport | null = null;
   constructor() {
     this.app = new Application();
   }
 
   public async init(appElement: HTMLElement): Promise<void> {
     this.appElement = appElement;
-    await this.app.init({
-      background: "#000",
-      resizeTo: this.appElement,
+    await this.app.init({ resizeTo: appElement, background: "#000" });
+    this.viewport = new Viewport({
+      width: this.app.screen.width,
+      height: this.app.screen.height,
+      chunkGenerator: new Space({chunkHeight: 1000 , chunkWidth: 1000, seed: seed(), planetSize: 50}),
     });
-    this.appElement.appendChild(this.app.canvas);
-  }
 
-  public async renderPlanet(planet: Planet): Promise<void> {
-    // Remove existing planet if any
-    if (this.currentPlanet) {
-      this.app.stage.removeChild(this.currentPlanet);
-      this.currentPlanet.destroy();
-    }
-
-    // Create and add new planet
-    this.currentPlanet = new PlanetSprite({ planet, canvas: this.app.screen });
-    const center = calcCenter(this.currentPlanet, this.app.screen);
-    this.currentPlanet.position = center;
-    this.app.stage.addChild(this.currentPlanet);
-    this.currentPlanet.startRotation();
-  }
-  public async renderRandomPlanet(): Promise<void> {
-    this.renderPlanet(PlanetFactory.createRandomPlanet());
-  }
-
-  public setRotationSpeed(speed: number): void {
-    // if (this.currentPlanet) {
-    //   this.currentPlanet.setRotationSpeed(speed);
-    // }
-  }
-
-  public toggleRotation(): void {
-    // if (this.currentPlanet) {
-    //   this.currentPlanet.toggleRotation();
-    // }
-  }
-
-  public resize(): void {
-    if (this.currentPlanet) {
-      const center = calcCenter(this.currentPlanet, this.app.screen);
-      this.currentPlanet.position = center;
-    }
+    this.app.stage.addChild(this.viewport);
+    this.appElement?.appendChild(this.app.canvas);
   }
 
   public destroy(): void {
