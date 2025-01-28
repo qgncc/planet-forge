@@ -20,36 +20,6 @@ export class PlanetApp {
     this.appElement.appendChild(this.app.canvas);
   }
 
-  public async renderPlanet(planet: Planet): Promise<void> {
-    // Remove existing planet if any
-    if (this.currentPlanet) {
-      this.app.stage.removeChild(this.currentPlanet);
-      this.currentPlanet.destroy();
-    }
-
-    // Create and add new planet
-    this.currentPlanet = new PlanetSprite({ planet, canvas: this.app.screen });
-    const center = calcCenter(this.currentPlanet, this.app.screen);
-    this.currentPlanet.position = center;
-    this.app.stage.addChild(this.currentPlanet);
-    this.currentPlanet.startRotation();
-  }
-  public async renderRandomPlanet(): Promise<void> {
-    this.renderPlanet(PlanetFactory.createRandomPlanet());
-  }
-
-  public setRotationSpeed(speed: number): void {
-    // if (this.currentPlanet) {
-    //   this.currentPlanet.setRotationSpeed(speed);
-    // }
-  }
-
-  public toggleRotation(): void {
-    // if (this.currentPlanet) {
-    //   this.currentPlanet.toggleRotation();
-    // }
-  }
-
   public resize(): void {
     if (this.currentPlanet) {
       const center = calcCenter(this.currentPlanet, this.app.screen);
